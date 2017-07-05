@@ -6,6 +6,10 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using HangmanApp.Models;
 using System.Text;
+using IronPython;
+using IronPython.Hosting;
+using IronPython.Runtime;
+using Microsoft.Scripting.Hosting;
 
 namespace HangmanApp
 {
@@ -16,10 +20,14 @@ namespace HangmanApp
         private String connectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\VisualStudio Projects\HangmanApp\Hangmen.MDB";
         private Graphics graphics;
         private Game currentGame;
+        private ScriptEngine m_pyEngine = null;
+        private ScriptScope m_pyScope = null;
 
         public Form1()
         {
             InitializeComponent();
+            m_pyEngine = Python.CreateEngine();
+            m_pyScope = m_pyEngine.CreateScope();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -45,19 +53,30 @@ namespace HangmanApp
                             DataTable wordDataset = new DataTable();
                             myAdapter.SelectCommand = new OleDbCommand("SELECT * FROM words", myConnection);
                             myAdapter.Fill(wordDataset);
-                            foreach (DataRow row in wordDataset.Rows)
+                            if(wordDataset.Rows.Count > 0)
                             {
-                                Word wordModel = new Word(
-                                    Convert.ToInt16(row[0]),
-                                    row[1].ToString(),
-                                    Convert.ToInt16(row[2])
-                                );
-                                Console.WriteLine(wordModel.name);
-                                currentGame.wordList.Add(wordModel);
+                                foreach (DataRow row in wordDataset.Rows)
+                                {
+                                    Word wordModel = new Word(
+                                        Convert.ToInt16(row[0]),
+                                        row[1].ToString(),
+                                        Convert.ToInt16(row[2])
+                                    );
+                                    Console.WriteLine(wordModel.name);
+                                    currentGame.wordList.Add(wordModel);
+                                }
+                                currentGame.getNewWord();
+                                labelWord.Text = currentGame.currentWord.word;
+                                tbPoints.Text = Convert.ToString(currentGame.points);
+                                btLetter.Enabled = true;
+                                btWord.Enabled = true;
                             }
-                            currentGame.getNewWord();
-                            labelWord.Text = currentGame.currentWord.word;
-                            tbPoints.Text = Convert.ToString(currentGame.points);
+                            else
+                            {
+                                MessageBox.Show("There are no word in the databse, please upload a wordlist!", "Message", MessageBoxButtons.OK);
+                                btLetter.Enabled = false;
+                                btWord.Enabled = false;
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -72,7 +91,6 @@ namespace HangmanApp
             }
             else
             {
-                Console.WriteLine("AJMOOOOO");
                 this.currentGame.wordSolved();
                 tbPoints.Text = Convert.ToString(currentGame.points);
                 if (currentGame.getNewWord())
@@ -113,7 +131,6 @@ namespace HangmanApp
                             insertGame.Parameters.AddWithValue("@score", currentGame.points);
                             insertGame.Parameters.AddWithValue("@userID", userID);
                             insertGame.ExecuteNonQuery();
-                            Console.WriteLine(userID);
                         }
                         catch (Exception ex)
                         {
@@ -174,9 +191,10 @@ namespace HangmanApp
         {
             if (tbWord.Text.Length != 0)
             {
-                String givenWord = tbWord.Text;
-
-                if(givenWord == currentGame.currentWord.name)
+                String givenWord = tbWord.Text.ToUpper().Trim();
+                Console.WriteLine("GIVEN: " + givenWord + " length: " + givenWord.Length);
+                Console.WriteLine("GIVEN: " + currentGame.currentWord.name + " length: " + currentGame.currentWord.word.Length);
+                if (givenWord.Equals(currentGame.currentWord.name))
                 {
                     tbWord.Text = "";
                     this.startGameOrGetNewWord(false);
@@ -203,7 +221,19 @@ namespace HangmanApp
 
         private void importWordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                ScriptSource ss = m_pyEngine.CreateScriptSourceFromFile(@"D:\VisualStudio Projects\HangmanApp\HangmenPython\HangmenPython.py");
+                ss.Execute(m_pyScope);
+                dynamic importNewWordList = m_pyScope.GetVariable("importNewWordList");
+                importNewWordList(this, connectionString);
+                startGameOrGetNewWord(true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            
         }
     }
 }

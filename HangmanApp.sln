@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangmanApp", "HangmanApp\HangmanApp.csproj", "{A7D4ED81-5D1E-49DC-A1DF-109CD277E95F}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "HangmenPython", "HangmenPython\HangmenPython.pyproj", "{0105B358-F079-40C3-9E1E-E3B2A0162EBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,8 @@ Global
 		{A7D4ED81-5D1E-49DC-A1DF-109CD277E95F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7D4ED81-5D1E-49DC-A1DF-109CD277E95F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7D4ED81-5D1E-49DC-A1DF-109CD277E95F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0105B358-F079-40C3-9E1E-E3B2A0162EBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0105B358-F079-40C3-9E1E-E3B2A0162EBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

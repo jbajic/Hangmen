@@ -12,7 +12,7 @@ namespace HangmanApp.Models
         public Word(int id, String name, int score)
         {
             this.id = id;
-            this.name = name.ToUpper();
+            this.name = name.Trim().ToUpper();
             this.score = score;
             Regex rgx = new Regex("[A-Z]");
             this.word = rgx.Replace(this.name, "_ ");

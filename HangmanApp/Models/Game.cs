@@ -68,7 +68,7 @@ namespace HangmanApp.Models
 
         public bool getNewWord()
         {
-            Console.WriteLine("COUT");
+            Console.WriteLine("COUNT");
             Console.WriteLine((wordList.Count));
             Random rand = new Random();
             if(wordList.Count > 0)

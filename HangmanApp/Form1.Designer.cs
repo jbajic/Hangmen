@@ -45,6 +45,7 @@
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.highscoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importWordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.gbHangmen.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -201,16 +202,21 @@
             // highscoresToolStripMenuItem
             // 
             this.highscoresToolStripMenuItem.Name = "highscoresToolStripMenuItem";
-            this.highscoresToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.highscoresToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.highscoresToolStripMenuItem.Text = "Highscores";
             this.highscoresToolStripMenuItem.Click += new System.EventHandler(this.highscoresToolStripMenuItem_Click);
             // 
             // importWordsToolStripMenuItem
             // 
             this.importWordsToolStripMenuItem.Name = "importWordsToolStripMenuItem";
-            this.importWordsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.importWordsToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.importWordsToolStripMenuItem.Text = "Import words";
             this.importWordsToolStripMenuItem.Click += new System.EventHandler(this.importWordsToolStripMenuItem_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "Text files (*.txt)|*.txt";
             // 
             // Form1
             // 
@@ -257,6 +263,7 @@
         private System.Windows.Forms.ToolStripMenuItem gameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem highscoresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importWordsToolStripMenuItem;
+        public System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
