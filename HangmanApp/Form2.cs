@@ -61,8 +61,8 @@ namespace HangmanApp
                                     score2.Text = row[1].ToString();
                                     break;
                                 case 2:
-                                    name2.Text = row[2].ToString();
-                                    score2.Text = row[1].ToString();
+                                    name3.Text = row[2].ToString();
+                                    score3.Text = row[1].ToString();
                                     break;
                             }
                         }
